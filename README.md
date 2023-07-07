@@ -10,7 +10,7 @@
 If ``backrooms_entrance`` is false the player will simply be teleported to the pocket dimension when touching the center.
  
 
-**Demonstration videoVideo:**
+**Demonstration Video:**
 
 
 
