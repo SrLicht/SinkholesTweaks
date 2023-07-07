@@ -7,6 +7,9 @@
  # Sinking players
  This plugin has a function that makes the players that are sunk by a Sinkhole to be seen in this way, it is disabled by default because to make a player go through the ground I have to give him NoClip and I only give it for 0.5 seconds but it is still disabled by default.
 
+If ``backrooms_entrance`` is false the player will simply be teleported to the pocket dimension when touching the center.
+ 
+
 **Demonstration videoVideo:**
 
 
