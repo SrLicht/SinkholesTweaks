@@ -18,7 +18,7 @@ namespace SinkholesTweaks
         };
 
         [Description("If players are within this distance from the center of the Sinkhole they will be sucked into the pocket dimension.")]
-        public float SuctionRadius { get; set; } = 1.3f;
+        public float SuctionRadius { get; set; } = 1.4f;
 
         [Description("If this is not empty, this text will be sent as a broadcast to the player when he is taken to the pocket dimension.")]
         public string BroadcastText { get; set; } = "";
