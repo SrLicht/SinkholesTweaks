@@ -23,7 +23,7 @@ namespace SinkholesTweaks
 
         public static Harmony HarmonyInstance;
 
-        public const string Version = "1.0.0";
+        public const string Version = "1.0.1";
 
         [PluginConfig]
         public Config Config;
@@ -75,7 +75,7 @@ namespace SinkholesTweaks
                     if (hub.GetRoleId() != playerRole)
                         yield break;
 
-                    if (stopwatch.Elapsed.TotalSeconds >= 4)
+                    if (stopwatch.Elapsed.TotalSeconds > 2)
                         break;
 
                     var newposition = Vector3.MoveTowards(fpc.FpcModule.Position, new Vector3(fpc.FpcModule.Position.x, targetDepth, fpc.FpcModule.Position.z), 0.05f);
@@ -85,12 +85,14 @@ namespace SinkholesTweaks
                     currentDepth = fpc.FpcModule.Position.y;
                     yield return Timing.WaitForSeconds(0.0025f);
                 }
+
                 stopwatch.Stop();
 
-                yield return Timing.WaitForSeconds(0.1f);
+                yield return Timing.WaitForSeconds(0.3f);
+                hub.playerEffectsController.EnableEffect<Corroding>(20f).AttackerHub = ReferenceHub._hostHub;
                 hub.playerEffectsController.EnableEffect<PocketCorroding>();
 
-                if (!string.IsNullOrEmpty(SinkholesTweaks.Instance.Config.BroadcastText))
+                if (SinkholesTweaks.Instance.Config.BroadcastOnFall && !string.IsNullOrEmpty(SinkholesTweaks.Instance.Config.BroadcastText))
                     Server.Broadcast.TargetAddElement(hub.connectionToClient, SinkholesTweaks.Instance.Config.BroadcastText, SinkholesTweaks.Instance.Config.BroadcastDuration, Broadcast.BroadcastFlags.Normal);
 
                 yield return Timing.WaitForSeconds(1);

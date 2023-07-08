@@ -34,7 +34,9 @@ namespace SinkholesTweaks.Patches
                     }
                     else
                     {
+                        player.playerEffectsController.EnableEffect<Corroding>(20f).AttackerHub = ReferenceHub._hostHub;
                         player.playerEffectsController.EnableEffect<PocketCorroding>();
+
                         if (!string.IsNullOrEmpty(SinkholesTweaks.Instance.Config.BroadcastText))
                             Server.Broadcast.TargetAddElement(player.connectionToClient, SinkholesTweaks.Instance.Config.BroadcastText, SinkholesTweaks.Instance.Config.BroadcastDuration, Broadcast.BroadcastFlags.Normal);
                     }
@@ -47,6 +49,7 @@ namespace SinkholesTweaks.Patches
                     return true;
                 }
             }
+
             return true;
         }
     }
