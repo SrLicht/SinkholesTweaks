@@ -23,7 +23,7 @@ namespace SinkholesTweaks
 
         public static Harmony HarmonyInstance;
 
-        public const string Version = "1.0.1";
+        public const string Version = "1.0.2";
 
         [PluginConfig]
         public Config Config;
@@ -42,6 +42,7 @@ namespace SinkholesTweaks
             HarmonyInstance = new($"SinkholesTweaks.{Version}.{DateTime.Now.Ticks}");
             HarmonyInstance.PatchAll();
 
+            Log.Info("SinkholesTweaks fully loaded");
         }
 
         [PluginUnload]
@@ -63,6 +64,7 @@ namespace SinkholesTweaks
 
             if (hub.roleManager.CurrentRole is IFpcRole fpc)
             {
+                var capturePosition = fpc.FpcModule.Position;
                 var stopwatch = new Stopwatch();
                 hub.playerStats.GetModule<AdminFlagsStat>().SetFlag(AdminFlags.Noclip, true);
                 float currentDepth = fpc.FpcModule.Position.y;
@@ -89,13 +91,20 @@ namespace SinkholesTweaks
                 stopwatch.Stop();
 
                 yield return Timing.WaitForSeconds(0.3f);
-                hub.playerEffectsController.EnableEffect<Corroding>(20f).AttackerHub = ReferenceHub._hostHub;
-                hub.playerEffectsController.EnableEffect<PocketCorroding>();
 
-                if (SinkholesTweaks.Instance.Config.BroadcastOnFall && !string.IsNullOrEmpty(SinkholesTweaks.Instance.Config.BroadcastText))
-                    Server.Broadcast.TargetAddElement(hub.connectionToClient, SinkholesTweaks.Instance.Config.BroadcastText, SinkholesTweaks.Instance.Config.BroadcastDuration, Broadcast.BroadcastFlags.Normal);
+                // Teleport to pocket dimension
+                fpc.FpcModule.ServerOverridePosition(Vector3.up * -1998.5f, Vector3.zero);
 
+                if (Instance.Config.BroadcastOnFall && !string.IsNullOrEmpty(Instance.Config.BroadcastText))
+                    Server.Broadcast.TargetAddElement(hub.connectionToClient, Instance.Config.BroadcastText, Instance.Config.BroadcastDuration, Broadcast.BroadcastFlags.Normal);
+
+                yield return Timing.WaitForSeconds(0.5f);
+
+                // Because of how this works, I have to give them the effect so that when they leave they are teleported outside and don't stay forever in the pocket dimension.
+                var effect = hub.playerEffectsController.EnableEffect<PocketCorroding>();
+                effect.CapturePosition = new(capturePosition);
                 yield return Timing.WaitForSeconds(1);
+
                 SinkholesOnStayPatch.AffectedHubs.Remove(hub);
             }
         }

@@ -9,7 +9,6 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <TargetFramework>net48</TargetFramework>
         <SatelliteResourceLanguages>none</SatelliteResourceLanguages>
-        <Version>$(SemanticVersioningVersion)</Version>
     </PropertyGroup>
 
 
