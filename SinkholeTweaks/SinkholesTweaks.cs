@@ -23,7 +23,7 @@ namespace SinkholesTweaks
 
         public static Harmony HarmonyInstance;
 
-        public const string Version = "1.0.2";
+        public const string Version = "1.0.3";
 
         [PluginConfig]
         public Config Config;
@@ -35,7 +35,7 @@ namespace SinkholesTweaks
 
             if (ConfigFile.ServerConfig.GetFloat("sinkhole_spawn_chance", 0f) == 0)
             {
-                Log.Warning("sinkholes are disabled because in &3config_gameplay.txt&r &4sinkhole_spawn_chance&r is equal to &10&r.");
+                Log.Warning("SinkholesTweaks are disabled because in &3config_gameplay.txt&r &4sinkhole_spawn_chance&r is equal to &10&r.");
                 return;
             }
 
