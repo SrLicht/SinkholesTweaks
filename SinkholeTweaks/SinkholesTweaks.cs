@@ -23,7 +23,7 @@ namespace SinkholesTweaks
 
         public static Harmony HarmonyInstance;
 
-        public const string Version = "1.0.3.1";
+        public const string Version = "1.0.4";
 
         [PluginConfig]
         public Config Config;
